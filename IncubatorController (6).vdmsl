@@ -1,0 +1,59 @@
+
+-- there is an error in getTemp - change temp to actualTemp.
+types
+Signal = <INCREASE>|<DECREASE>|<DO_NOTHING>
+
+values
+MAX: int = 10;
+MIN: int = -10;
+
+state IncubatorController of --[has been updated from IncubatorMonitor]
+	requestedTemp : [int]
+	actualTemp : [int]
+	inv mk_IncubatorController(r,a) == (r=nil or MIN <= r and r <= MAX) and (a=nil or MIN <= a and a <= MAX)
+	init system == system = mk_IncubatorController(5, 5) -- should be (nil,nil)
+end
+
+functions
+-- [add] function inRange
+
+
+operations
+-- [add] setInitialTemp
+
+
+-- [add] requestChange
+
+
+-- [ revise increment to handle Signal]
+increment: () ==> ()
+increment() ==
+(
+	if actualTemp < MAX
+	then actualTemp := actualTemp + 1;
+)
+;
+
+-- [ revise decrement to handle Signal]
+decrement: () ==> ()
+decrement() ==
+(
+	if actualTemp > MIN
+	then actualTemp := actualTemp - 1;
+)
+;
+
+-- [ fix the error with temp - change it to actualTemp for now]
+-- [ replace getTemp with getActualTemp ]
+getTemp : () ==> int
+getTemp() ==
+(
+	return actualTemp -- change to actualTemp so as not to produce an error
+)
+
+-- [add getRequestedTemp]
+
+
+traces
+trace1 : increment(); getTemp()
+
